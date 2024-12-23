@@ -12,7 +12,8 @@ String? _durationToJson(Duration? duration) => duration?.toStandardFormat();
 
 @JsonSerializable()
 class FfprobeResult {
-  factory FfprobeResult.fromJson(Map<String, dynamic> json) => _$FfprobeResultFromJson(json);
+  factory FfprobeResult.fromJson(Map<String, dynamic> json) =>
+      _$FfprobeResultFromJson(json);
 
   FfprobeResult({
     this.streams,
@@ -26,7 +27,8 @@ class FfprobeResult {
 
   @override
   String toString() {
-    return 'FfprobeResult:\n' + const JsonEncoder.withIndent('  ').convert(toJson());
+    return 'FfprobeResult:\n' +
+        const JsonEncoder.withIndent('  ').convert(toJson());
   }
 }
 
@@ -130,7 +132,8 @@ class Stream {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Disposition {
-  factory Disposition.fromJson(Map<String, dynamic> json) => _$DispositionFromJson(json);
+  factory Disposition.fromJson(Map<String, dynamic> json) =>
+      _$DispositionFromJson(json);
 
   Disposition({
     this.defaultCount,
@@ -246,3 +249,25 @@ class Tags {
 //             "creation_time": "2020-12-22T05:22:33.000000Z"
 //         }
 //     }
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class ChapterResult {
+  ChapterResult(this.chapters);
+  factory ChapterResult.fromJson(Map<String, dynamic> json) => _$ChapterResultFromJson(json);
+  final List<Chapter>? chapters;
+  Map<String, dynamic> toJson() => _$ChapterResultToJson(this);
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class Chapter {
+  Chapter(this.id, this.timeBase, this.start, this.startTime, this.end, this.endTime, this.tags);
+  factory Chapter.fromJson(Map<String, dynamic> json) => _$ChapterFromJson(json);
+  final int? id;
+  final String? timeBase;
+  final int? start;
+  final String? startTime;
+  final int? end;
+  final String? endTime;
+  final Map<String, String>? tags;
+  Map<String, dynamic> toJson() => _$ChapterToJson(this);
+}

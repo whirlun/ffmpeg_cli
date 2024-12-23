@@ -36,4 +36,26 @@ class Ffprobe {
     final json = jsonDecode(result.stdout);
     return FfprobeResult.fromJson(json);
   }
+  static Future<ChapterResult> readChapter(String filePath) async {
+    final result = await Process.run('ffprobe', [
+      '-v',
+      'quiet',
+      '-print_format',
+      'json',
+      '-show_chapters',
+      filePath,
+    ]);
+
+    if (result.exitCode != 0) {
+      print('Failed to run ffprobe for "$filePath"');
+      throw Exception('ffprobe returned error: ${result.exitCode}\n${result.stderr}');
+    }
+
+    if (result.stdout == null || result.stdout is! String || (result.stdout as String).isEmpty) {
+      throw Exception('ffprobe did not output expected data: ${result.stdout}');
+    }
+
+    final json = jsonDecode(result.stdout);
+    return ChapterResult.fromJson(json);
+  }
 }
